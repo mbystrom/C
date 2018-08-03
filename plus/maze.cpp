@@ -2,6 +2,8 @@
 #include <string>
 #include <algorithm>
 #include <map>
+#include <cstdlib>
+#include <ctime>
 
 struct Directions
 {
@@ -9,12 +11,10 @@ struct Directions
     const short S = 2;
     const short E = 4;
     const short W = 8;
-    
-    
 };
 
-const int height = 20;
-const int width = 20;
+const int height = 5;
+const int width = 5;
 
 bool isOut (int x, int y);
 void CarveMaze (int cx, int cy, int (*grid)[height][width]);
@@ -22,6 +22,7 @@ void PrintMaze (int (*grid)[height][width]);
 
 int main()
 {
+    std::srand(std::time(0));
     int map[height][width] = { 0 };
     CarveMaze(0, 0, &map);
     PrintMaze(&map);
@@ -32,7 +33,7 @@ void CarveMaze (int cx, int cy, int (*grid)[height][width])
 {
     const Directions directions;
     int _dirs[4] = { directions.N, directions.S, directions.E, directions.W };
-    std::random_shuffle(_dirs[0], _dirs[4]); // some error in random_shuffle here?
+    std::random_shuffle(&_dirs[0], &_dirs[4]); // some error in random_shuffle here?
     
     std::map<int, int> DX {
         { directions.N, 0 },
@@ -55,7 +56,7 @@ void CarveMaze (int cx, int cy, int (*grid)[height][width])
         { directions.W, directions.E }
     };
     
-    for (uint i = 0; i < (sizeof(_dirs)/sizeof(_dirs[0])); i++) {
+    for (unsigned int i = 0; i < (sizeof(_dirs)/sizeof(_dirs[0])); i++) {
         int nx = cx + DX[_dirs[i]];
         int ny = cy + DY[_dirs[i]];
         
@@ -64,7 +65,7 @@ void CarveMaze (int cx, int cy, int (*grid)[height][width])
         if (*grid[ny][nx] == 0) {
             *grid[cy][cx] |= _dirs[i];
             *grid[ny][nx] |= Opposite[_dirs[i]];
-            CarveMaze(nx, ny, &*grid);
+            CarveMaze(nx, ny, grid);
         }
     }
 }
@@ -84,8 +85,9 @@ void PrintMaze(int (*grid)[height][width])
     using namespace std;
     const Directions directions;
     
-    for (int x = 0; x < width; x++) {
-        cout << "__";
+    cout << " ";
+    for (int x = 0; x < width*2-1; x++) {
+        cout << "_";
     }
     cout << endl;
     for (int y = 0; y < height; y++) {
