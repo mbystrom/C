@@ -24,7 +24,8 @@ bool isOut(int cx, int cy);
 
 int main ()
 {
-    std::srand(std::time(0));
+    int seed = std::time(0);
+    std::srand(seed);
     
     DX[N] = 0;
     DX[S] = 0;
@@ -43,6 +44,8 @@ int main ()
 
     CarveMaze(0, 0);
     PrintMaze();
+    
+    std::cout << "seed was: " << seed << std::endl;
 }
 
 void CarveMaze (int cx, int cy)
