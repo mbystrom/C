@@ -2,10 +2,8 @@
 #include <cstdlib>
 #include <ctime>
 
-const int width = 20;
-const int height = 20;
-
-int grid[height][width] = { 0 };
+int width = 20;
+int height = 20;
 
 const short N = 1;
 const short S = 2;
@@ -20,6 +18,9 @@ void shuffle(int array[], int length);
 void CarveMaze(int x, int y);
 void PrintMaze();
 bool isOut(int cx, int cy);
+void Create2DArray(int height, int width, int** arr, int value=0);
+
+int** grid = NULL;
 
 int main ()
 {
@@ -40,11 +41,26 @@ int main ()
     opposite[S] = N;
     opposite[E] = W;
     opposite[W] = E;
-
+    
+    grid = new int*[height];
+    for (int i = 0; i < height; i++) {
+        grid[i] = new int[width];
+    }
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+            grid[i][j] = 0;
+        }
+    }
+    
     CarveMaze(0, 0);
     PrintMaze();
     
     std::cout << "seed was: " << seed << std::endl;
+    
+    for (int i = 0; i < height; i++) {
+        delete [] grid[i];
+    }
+    delete [] grid;
 }
 
 void CarveMaze (int cx, int cy)
@@ -104,6 +120,7 @@ void PrintMaze ()
         cout << endl;
     }
 }
+
 
 void shuffle (int array[], int length)
 {    
