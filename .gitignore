@@ -1,1 +1,5 @@
 */compiled/
+*.obj
+*.exe
+*/*.obj
+*/*.exe
