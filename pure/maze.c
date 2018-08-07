@@ -1,13 +1,11 @@
-#include <stdio>
+#include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
 
-srand(time(NULL));
+#define HEIGHT 20
+#define WIDTH 20
 
-const int height = 20;
-const int width = 20;
-
-int grid[height][width] = { 0 };
+int grid[HEIGHT][WIDTH] = { 0 };
 
 const short N = 1;
 const short S = 2;
@@ -25,6 +23,8 @@ int PrintMaze();
 
 int main ()
 {
+    srand(time(NULL));
+    
     DX[N] = 0;
     DX[S] = 0;
     DX[E] = 1;
@@ -64,8 +64,8 @@ int CarvePassage (int cx, int cy)
 
 unsigned char isOut (int x, int y)
 {
-    if (x < 0 || x >= width) return 1;
-    if (y < 0 || y >= height) return 1;
+    if (x < 0 || x >= WIDTH) return 1;
+    if (y < 0 || y >= HEIGHT) return 1;
     return 0;
 }
 
@@ -82,14 +82,14 @@ int shuffle (int array[], int length)
 int PrintMaze ()
 {
     printf(" ");
-    for (int x = 0; x < width*2-1; x++) {
+    for (int x = 0; x < WIDTH*2-1; x++) {
         printf("_");
     }
     printf("\n");
 
-    for (int y = 0; y < height; y++) {
+    for (int y = 0; y < HEIGHT; y++) {
         printf("|");
-        for (int x = 0; x < width; x++) {
+        for (int x = 0; x < WIDTH; x++) {
             if ((grid[y][x] & S) != 0) {
                 printf(" ");
             } else {
