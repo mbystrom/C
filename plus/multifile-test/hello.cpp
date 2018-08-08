@@ -2,12 +2,12 @@
 
 using namespace std;
 
-void PRINT_F (float f)
+void PRINT_F(float f)
 {
-  cout << f << endl;
+    cout << f << endl;
 }
 
-void PRINT_I (int i)
+void PRINT_I(int i)
 {
-  cout << i << endl;
+    cout << i << endl;
 }
