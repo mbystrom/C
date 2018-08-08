@@ -2,6 +2,7 @@
 #include <vector>
 #include "hello.h"
 #include "math.h"
+#include "matrix.h"
 
 int height = 20;
 int width = 20;
@@ -18,13 +19,7 @@ int main()
     PRINT_F(12.3f);
     PRINT_I(14);
 
-    std::vector<std::vector<int>> vec;
-    for (int i = 0; i < height; i++) {
-            vec.push_back(std::vector<int>());
-            for (int j = 0; j < width; j++) {
-            vec[i].push_back(0);
-        }
-    }
+    std::vector<std::vector<int>> vec = generate_matrix(height, width, 0);
 
     vec[12][11] = 1;
 
