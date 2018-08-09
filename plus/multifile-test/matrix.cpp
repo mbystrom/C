@@ -1,4 +1,5 @@
 #include <vector>
+#include <iostream>
 
 std::vector<std::vector<int>> generate_matrix (int height, int width, int value)
 {
@@ -11,4 +12,14 @@ std::vector<std::vector<int>> generate_matrix (int height, int width, int value)
     }
     
     return vec;
+}
+
+void print_matrix(std::vector<std::vector<int>> grid)
+{
+	for (std::vector<int> row : grid) {
+		for (int i : row) {
+			std::cout << i;
+		}
+		std::cout << std::endl;
+	}
 }

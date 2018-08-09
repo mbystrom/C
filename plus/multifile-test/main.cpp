@@ -23,12 +23,7 @@ int main()
 
     vec[12][11] = 1;
 
-    for (int y = 0; y < height; y++) {
-        for (int x = 0; x < width; x++) {
-            std::cout << vec[y][x];
-        }
-        std::cout << std::endl;
-    }
+    print_matrix(vec);
 
     char t[10];
     std::cout << "press enter to continue: ";
