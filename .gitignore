@@ -1,5 +1,10 @@
 */compiled/
 *.obj
+*.o
 *.exe
+*.out
 */*.obj
+*/*.o
 */*.exe
+*/*.out
+
