@@ -1,127 +1,131 @@
 #include <iostream>
+#include <vector>
 #include <cstdlib>
 #include <ctime>
 
-// directions (must correspond to bits)
-enum Directions
-{
-    const unsigned char N = 1;
-    const unsigned char S = 2;
-    const unsigned char E = 4;
-    const unsigned char W = 8;
-}
+const int width = 20;
+const int height = 20;
 
-// arrays with directions corresponding to relative translation
+std::vector<std::vector<int>> grid;
+
+const short N = 1;
+const short S = 2;
+const short E = 4;
+const short W = 8;
+
 int DX[9];
 int DY[9];
+int opposite[9];
 
-// just the opposite
-int Opposite[9];
+void shuffle(int array[], int length);
+void CarveMaze(int x, int y);
+void PrintMaze();
+bool isOut(int cx, int cy);
 
-// width and height of the maze
-int width = 10;
-int height = 10;
-
-// function forward-declaration
-void CarveMaze (int cx, int cy, int (*grid)[width][height]);
-bool isOut (int x, int y);
-void shuffleFour (int *array);
-void PrintMaze (int (*grid)[height][width])
-
-int main ()
+int main()
 {
-    // seeding random
-    std::srand(std::time(0));
+	int seed = std::time(0);
+	std::srand(seed);
 
-    // assign values to direction arrays
-    DX[N] = 0;
-    DX[S] = 0;
-    DX[E] = 1;
-    DX[W] = -1;
+	DX[N] = 0;
+	DX[S] = 0;
+	DX[E] = 1;
+	DX[W] = -1;
 
-    DY[N] = -1;
-    DY[S] = 1;
-    DY[E] = 0;
-    DY[W] = 0;
+	DY[N] = -1;
+	DY[S] = 1;
+	DY[E] = 0;
+	DY[W] = 0;
 
-    Opposite[N] = S;
-    Opposite[S] = N;
-    Opposite[E] = W;
-    Opposite[W] = E;
+	opposite[N] = S;
+	opposite[S] = N;
+	opposite[E] = W;
+	opposite[W] = E;
 
-    // initialize the map and start carving it
-    int map[height][width] = { 0 };
-    CarveMaze(0, 0, &map);
+	for (int i = 0; i < height; i++) {
+		grid.push_back(std::vector<int>());
+		for (int j = 0; j < width; j++) {
+			grid[i].push_back(0);
+		}
+	}
 
-    // print the result
-    PrintMaze(&map);
+	CarveMaze(0, 0);
+	PrintMaze();
+
+	std::cout << "seed was: " << seed << std::endl;
+
+	std::cout << "press enter to exit: ";
+	std::cin.ignore();
 }
 
-void CarveMaze (int cx, int cy, int (*grid)[height][width])
+void CarveMaze(int cx, int cy)
 {
-    int directions[4] = { N, S, E, W };
-    shuffleFour(&directions);
+	int directions[4] = { N, S, E, W };
+	shuffle(directions, 4);
 
-    for (int i = 0; i < (sizeof(directions)/sizeof(directions[0])); i++) {
-        int nx = cx + DX[directions[i]];
-        int ny = cy + DY[directions[i]];
+	for (int i = 0; i < 4; i++) {
+		int nx = cx + DX[directions[i]];
+		int ny = cy + DY[directions[i]];
 
-        if (isOut(nx, ny)) continue;
+		if (isOut(nx, ny)) continue;
 
-        if (*grid[ny][nx] == 0) {
-            *grid[cy][cx] |= directions[i];
-            *grid[ny][nx] |= Opposite[directions[i]];
-            CarveMaze(nx, ny, &*grid);
-        }
-    }
+		if (grid[ny][nx] == 0) {
+			grid[cy][cx] |= directions[i];
+			grid[ny][nx] |= opposite[directions[i]];
+			CarveMaze(nx, ny);
+		}
+	}
 }
 
-void shuffleFour (int *array)
+bool isOut(int x, int y)
 {
-    int length = sizeof(*array) / sizeof(*array[0]);
-    for (int i = length - 1; i > 0; i--) {
-        j = std::rand() % (i + 1);
-        int temp = *array[j];
-        *array[j] = *array[i];
-        *array[i] = temp;
-    }
+	if (x < 0 || x >= width) return true;
+	if (y < 0 || y >= height) return true;
+	return false;
 }
 
-bool isOut (int x, int y)
+void PrintMaze()
 {
-    if (x < 0 || x >= width) return true;
-    if (y < 0 || y >= height) return true;
-    return false;
+	using namespace std;
+
+	cout << " ";
+	for (int x = 0; x < width * 2 - 1; x++) {
+		cout << "_";
+	}
+	cout << endl;
+
+	for (int y = 0; y < height; y++) {
+		cout << "|";
+		for (int x = 0; x < width; x++) {
+			if ((grid[y][x] & S) != 0) {
+				cout << " ";
+			}
+			else {
+				cout << "_";
+			}
+
+			if ((grid[y][x] & E) != 0) {
+				if (((grid[y][x] | grid[y][x + 1]) & S) != 0) {
+					cout << " ";
+				}
+				else {
+					cout << "_";
+				}
+			}
+			else {
+				cout << "|";
+			}
+		}
+		cout << endl;
+	}
 }
 
-void PrintMaze (int (*grid)[height][width])
+void shuffle(int array[], int length)
 {
-    using namespace std;
-    
-    for (int x = 0; x < width; x++) {
-        cout << "__";
-    }
-    cout << endl;
-    for (int y = 0; y < height; y++) {
-        cout << "|";
-        for (int x = 0; x < width; x++) {
-            if ((*grid[y][x] & S) != 0) {
-                cout << " ";
-            } else {
-                cout << "_";
-            }
-            
-            if ((*grid[y][x] & E) != 0) {
-                if (((*grid[y][x] | *grid[y][x+1]) & S) != 0) {
-                    cout << " ";
-                } else {
-                    cout << "_";
-                }
-            } else {
-                cout << "|";
-            }
-        }
-        cout << endl;
-    }
+	for (int i = length - 1; i > 0; i--) {
+		int j = std::rand() % i;
+		int temp = array[j];
+		array[j] = array[i];
+		array[i] = temp;
+	}
 }
-
