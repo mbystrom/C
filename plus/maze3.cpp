@@ -51,6 +51,7 @@ void CarveMaze (int cx, int cy)
 {
     int directions[4] = { N, S, E, W };
     shuffle(directions, 4);
+
     for (int i = 0; i < 4; i++) {
         int nx = cx + DX[directions[i]];
         int ny = cy + DY[directions[i]];
