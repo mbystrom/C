@@ -27,4 +27,4 @@ clean:
 
 run:
 	make
-	./main
+	./$(PROGRAM_NAME)

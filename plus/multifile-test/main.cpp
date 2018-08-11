@@ -25,9 +25,8 @@ int main()
 
     print_matrix(vec);
 
-    char t[10];
     std::cout << "press enter to continue: ";
-    std::cin >> t;
+    std::cin.ignore();
 
     return 0;
 }
