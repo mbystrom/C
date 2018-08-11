@@ -24,3 +24,7 @@ matrix.o: matrix.cpp
 
 clean:
 	rm *.o main
+
+run:
+	make
+	./main

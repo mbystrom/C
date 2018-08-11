@@ -17,3 +17,7 @@ maze.o: maze.cpp
 
 clean:
 	rm *.o maze
+
+run:
+	make
+	./maze
