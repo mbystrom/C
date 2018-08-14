@@ -1,0 +1,13 @@
+Must use g++ (cygwin is fine)
+
+has to link!
+
+compile + link:
+    g++ -o file.cpp -lncurses --std=c++14
+
+compiling only:
+    g++ -c file.cpp -lncurses --std=c++14
+
+linking only:
+    g++ -o filename file.o -lncurses --std=c++14
+
