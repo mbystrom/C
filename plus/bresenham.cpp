@@ -32,7 +32,7 @@ void DrawLine (int startX, int startY, int endX, int endY)
     float error = 0.0;
     
     int y = startY;
-    for (int x = startX; x < startX + xRange; x++) {
+    for (int x = startX; x <= startX + xRange; x++) {
         mvwaddch(stdscr, y, x, '*');
         error += deltaErr;
         if (error >= 0.5) {

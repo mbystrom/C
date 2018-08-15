@@ -14,5 +14,5 @@ int main ()
         ++charCount;
         if (c == '\n') ++lineCount;
     }
-    printf("your file is %ld lines\nit is %ld characters", lineCount, charCount);
+    printf("your file is %ld lines\nit is %ld characters\n", lineCount, charCount);
 } 
