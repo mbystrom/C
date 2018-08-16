@@ -1,0 +1,18 @@
+#ifndef CLASS_CLASS
+#define CLASS_CLASS
+
+class Obj {
+private:
+    int num;
+public:
+    Obj () {}
+    ~Obj () {}
+    void setNum (int n) {
+        num = n;
+    }
+    int getNum () {
+        return num;
+    }
+};
+
+#endif
