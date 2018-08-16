@@ -13,34 +13,52 @@ int sign (float x) {
 
 void DrawLine (int startX, int startY, int endX, int endY)
 {
-    if (startX > endX) {
-        int temp = startX;
-        startX = endX;
-        endX = temp;
-    }
-
-    int xRange = endX - startX;
-    
     float deltaX = (endX - startX);
     float deltaY = (endY - startY);
+
+    bool horizontal;
+    (deltaX >= deltaY) ? horizontal = true : horizontal = false;
+
     float deltaErr;
-    if ((endY - startY) >= 0) {
-        deltaErr = deltaY / deltaX;
-    } else {
-        deltaErr = -deltaY / deltaX;
-    }
     float error = 0.0;
-    
+    if (horizontal) {
+        if ((endY - startY) >= 0) {
+        deltaErr = deltaY / deltaX;
+        } else {
+            deltaErr = -deltaY / deltaX;
+        }
+    }
+    else {
+        if ((endX - startX) >= 0) {
+        deltaErr = deltaX/deltaY;
+        } else {
+            deltaErr = -deltaX/deltaY;
+        }
+    }
+
+    int x = startX;
     int y = startY;
-    for (int x = startX; x <= startX + xRange; x++) {
+
+    while (true) {
+        if (horizontal) {
+            if (x >= startX + deltaX) break;
+            x++;
+        }
+        else {
+            if (y >= startY + deltaY) break;
+            y++;
+        }
         mvwaddch(stdscr, y, x, '*');
         error += deltaErr;
-        if (error >= 0.5) {
-            y += sign(deltaY);
+
+        if (error > 0.5) {
+            if (horizontal) y += sign(deltaY);
+            else x += sign(deltaX);
             error -= 1.0;
         }
     }
 }
+
 
 
 int main ()
@@ -54,7 +72,7 @@ int main ()
     int endY = std::rand() % maxHeight;
 
     initscr();
-    
+
     DrawLine(startX, startY, endX, endY);
     wrefresh(stdscr);
 
