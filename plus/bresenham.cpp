@@ -23,6 +23,7 @@ void DrawLine (int startX, int startY, int endX, int endY)
     
     float deltaX = (endX - startX);
     float deltaY = (endY - startY);
+
     float deltaErr;
     if ((endY - startY) >= 0) {
         deltaErr = deltaY / deltaX;
@@ -34,6 +35,7 @@ void DrawLine (int startX, int startY, int endX, int endY)
     int y = startY;
     for (int x = startX; x <= startX + xRange; x++) {
         mvwaddch(stdscr, y, x, '*');
+        
         error += deltaErr;
         if (error >= 0.5) {
             y += sign(deltaY);

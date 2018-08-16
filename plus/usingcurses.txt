@@ -3,14 +3,17 @@ Must use g++ (cygwin is fine)
 has to link!
 
 compile + link:
-    g++ -o file.cpp -lncurses --std=c++14
+    g++ -o PROGRAM_NAME file.cpp -lncurses -std=c++14
 
 compiling only:
     g++ -c file.cpp -lncurses --std=c++14
 
 linking only:
-    g++ -o filename file.o -lncurses --std=c++14
+    g++ -o PROGRAM_NAME file.o (file2.o) -lncurses -std=c++14
 
+
+static compilation/linking:
+    g++ -static -o PROGRAM_NAME file.cpp -lncurses -std=c++14
 
 some documentation:
     http://www.cs.ukzn.ac.za/~hughm/os/notes/ncurses.html
