@@ -39,6 +39,13 @@ void freeList (IntList* ls) {
     ls -> list = GROW_ARRAY(ls->list, int, ls->capacity, 0);
 }
 
+int pop (IntList* ls) {
+    int back = ls->list[ls->count-1];
+    ls->list[ls->count-1] = 0;
+    ls->count--;
+    return back;
+}
+
 void* reallocate(void* previous, size_t oldSize, size_t newSize) {
     if (newSize == 0) {
         printf("freeing list\n");
@@ -54,6 +61,9 @@ int main ()
     IntList ls;
     initList(&ls);
     writeToList(&ls, 1);
-    printf("%d\n",ls.list[0]);
+    writeToList(&ls, 2);
+    writeToList(&ls, 3);
+    printf("%d %d %d\n",ls.list[0], ls.list[1], ls.list[2]);
+    printf("%d\n", pop(&ls));
     freeList(&ls);
 }
