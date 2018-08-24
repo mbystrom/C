@@ -23,14 +23,14 @@ void DrawLine (int startX, int startY, int endX, int endY)
     float error = 0.0;
     if (horizontal) {
         if ((endY - startY) >= 0) {
-        deltaErr = deltaY / deltaX;
+            deltaErr = deltaY / deltaX;
         } else {
             deltaErr = -deltaY / deltaX;
         }
     }
     else {
         if ((endX - startX) >= 0) {
-        deltaErr = deltaX/deltaY;
+            deltaErr = deltaX/deltaY;
         } else {
             deltaErr = -deltaX/deltaY;
         }
@@ -42,14 +42,14 @@ void DrawLine (int startX, int startY, int endX, int endY)
     while (true) {
         if (horizontal) {
             if (x > startX + deltaX) break;
-            x++;
+            x += sign(deltaX);
         }
         else {
             if (y > startY + deltaY) break;
-            y++;
+            y += sign(deltaY);
         }
         mvwaddch(stdscr, y, x, '*');
-        
+
         error += deltaErr;
 
         if (error > 0.5) {
