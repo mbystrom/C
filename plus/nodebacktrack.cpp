@@ -6,59 +6,60 @@
 using namespace std;
 
 struct Point {
-    Point () {
-        x = 0;
-        y = 0;
-    }
-    Point (int _x, int _y) {
-        x = _x;
-        y = _y;
-    }
-
-    int x;
-    int y;
+	Point () {
+		x = 0;
+		y = 0;
+	}
+	int x;
+	int y;
 };
 
 struct Node {
-    Node (Point _pos, Node* _parent) {
-        pos = _pos;
-        parent = _parent;
-    }
-    Node (Point _pos) {
-        pos = _pos;
-        parent = nullptr;
-    }
+	Node (Node* _parent) {
+		pos = Point();
+		parent = _parent;
+	}
+	Node () {
+		pos = Point();
+		parent = nullptr;
+	}
 
-    Node* parent;
-    Point pos;
+	Node* parent;
+	Point pos;
 };
 
 vector<Node> makeNodes () {
-    Node current = Node(Point());
-    vector<Node> nodes;
-    for (int i = 0; i < NODE_COUNT; i++) {
-        Node newNode = Node(Point(), &current);
-        nodes.push_back(newNode);
-        current = newNode;
-    }
-    return nodes;
+	Node current = Node();
+	vector<Node> nodes;
+	for (int i = 0; i < NODE_COUNT; i++) {
+		Node* newNode = new Node(&current);
+		current = newNode;
+		nodes.push_back(current);
+		delete newNode;
+	}
+	return nodes;
 }
 
 vector<Point> backtrack (Node* node) {
-    vector<Point> points;
-    points.push_back(node->pos);
-    while (node->parent != nullptr) {
-        node = node->parent;
-        points.push_back(node->pos);
-    }
-    return points;
+	vector<Point> points;
+	points.push_back(node->pos);
+	int loops = 0;
+	while (node->parent != nullptr && node != nullptr) {
+		node = node->parent;
+		cout << "on loop #" << ++loops << endl;
+		points.push_back(node->pos);
+	}
+	return points;
 }
 
 int main () {
-    vector<Node> nodes = makeNodes();
-    Node lastNode = nodes[nodes.size()-1];
-    vector<Point> track = backtrack(&lastNode);
-    for (int i = 0; i < track.size(); i++) {
-        cout << &track[i] << endl;
-    }
+	vector<Node> nodes = makeNodes();
+	Node lastNode = nodes[nodes.size() - 1];
+	vector<Point> track = backtrack(&lastNode);
+	cout << "'nodes' is " << nodes.size() << " items" << endl;
+	cout << "'track' is " << track.size() << " items" << endl;
+	for (int i = 0; i < (long)track.size(); i++) {
+		cout << &track[i] << endl;
+	}
+	cin.ignore();
 }
