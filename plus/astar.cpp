@@ -81,6 +81,17 @@ struct Node {
 	int g;
 	int f;
 
+  Node& operator = (const Node& copy) {
+    pos = copy.pos;
+		if (copy.parent == nullptr) {
+			parent = nullptr;
+		} else {
+			parent = new Node(Point());
+			*parent = *copy.parent;
+		}
+		g = copy.g;
+		f = copy.f;
+  }
 	bool operator == (const Node& other) {
 		return (this->pos == other.pos);
 	}
@@ -124,9 +135,9 @@ vector<Node> getNeighbors (Node node, int grid[HEIGHT][WIDTH]) {
 		Node newNode = Node(newPos);
 		newNode.parent = &node;
 		if (find(begin(directions.Diagonal), end(directions.Diagonal), direction) != end(directions.Diagonal)) {
-			newNode.g = node.g + 1;
+			newNode.g = node.g + 14;
 		} else {
-			newNode.g = node.g + 1;
+			newNode.g = node.g + 10;
 		}
 		neighbors.push_back(newNode);
 	}
@@ -149,7 +160,7 @@ vector<Point> constructPath (Node* node) {
 
 vector<Point> aStar (Node start, Node goal, int grid[HEIGHT][WIDTH]) {
 	start.g = 0;
-	start.f = start.g + heuristic(start, goal);
+	start.f = start.g/10 + heuristic(start, goal);
 
 	vector<Node> openList;
 	vector<Node> closedList;
@@ -175,7 +186,7 @@ vector<Point> aStar (Node start, Node goal, int grid[HEIGHT][WIDTH]) {
 			if (find(closedList.begin(), closedList.end(), neighbor) != closedList.end()) {
 				continue;
 			}
-			neighbor.f = neighbor.g + heuristic(neighbor, goal);
+			neighbor.f = neighbor.g/10 + heuristic(neighbor, goal);
 			if (find(openList.begin(), openList.end(), neighbor) != openList.end()) {
 				for (Node openNeighbor : openList) {
 					if (neighbor.pos == openNeighbor.pos) {
