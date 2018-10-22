@@ -1,11 +1,11 @@
 CC=gcc
-filenames=chunk.c compiler.c debug.c main.c memory.c scanner.c value.c vm.c
-FLAGS=-c -Wall -std=c99
+filenames=chunk.c compiler.c debug.c main.c memory.c scanner.c value.c vm.c object.c
+FLAGS=-c -Wall -std=c11
 
 all: clox
 
-clox: chunk.o compiler.o debug.o main.o memory.o scanner.o value.o vm.o
-	gcc -o clox chunk.o compiler.o debug.o main.o memory.o scanner.o value.o vm.o
+clox: chunk.o compiler.o debug.o main.o memory.o object.o scanner.o value.o vm.o
+	gcc -o clox chunk.o compiler.o debug.o main.o memory.o object.o scanner.o value.o vm.o
 
 chunk.o: chunk.c
 	gcc $(FLAGS) chunk.c
@@ -21,6 +21,9 @@ main.o: main.c
 
 memory.o: memory.c
 	gcc $(FLAGS) memory.c
+
+object.o: object.c
+	gcc $(FLAGS) object.c
 
 scanner.o: scanner.c
 	gcc $(FLAGS) scanner.c
