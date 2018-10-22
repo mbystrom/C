@@ -18,5 +18,7 @@ static compilation/linking:
 some documentation:
     http://www.cs.ukzn.ac.za/~hughm/os/notes/ncurses.html
 
-extra note:
-    YOU HAVE TO CALL wrefresh(stdscr); FOR SOME COMMANDS TO WORK!!
+extra notes:
+    YOU HAVE TO CALL wrefresh(stdscr) For some commands to work!
+    Call initscr() before using anything
+    Call endwin() after you're finished
