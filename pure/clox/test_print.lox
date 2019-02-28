@@ -1,0 +1,7 @@
+// a test of the BRAND NEW PRINTING MACHINE!!!
+
+print "hello world";
+print "yeet";
+print "B rinting machine work";
+print 1 * 2 / (3 + 4);
+
